@@ -1,0 +1,172 @@
+/* Estilos generales y reseteo básico */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    line-height: 1.6;
+    padding: 20px;
+    background-color: #f8f9fa; /* Un gris muy claro, casi blanco */
+    color: #343a40; /* Un gris oscuro para texto general */
+}
+
+/* Contenedor principal */
+.calculator-container {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 30px; /* Un poco más de padding */
+    background-color: #fff;
+    border-radius: 10px; /* Bordes más redondeados */
+    box-shadow: 0 4px 10px rgba(0, 51, 102, 0.1); /* Sombra sutil con tinte azul */
+    border-top: 5px solid #003366; /* Borde superior con el azul NEFRA */
+}
+
+h1 {
+    font-size: 1.6em; /* Un poco más grande */
+    margin-bottom: 25px;
+    text-align: center;
+    color: #003366; /* Azul NEFRA para el título */
+    font-weight: 600; /* Un poco más de peso */
+}
+
+/* Grupo de entrada */
+.input-group {
+    margin-bottom: 25px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600; /* Label un poco más marcada */
+    color: #003366; /* Azul NEFRA */
+}
+
+.input-group input[type="number"] {
+    width: 100%;
+    padding: 14px; /* Input más grande */
+    border: 1px solid #ced4da; /* Borde gris claro */
+    border-radius: 6px;
+    font-size: 1.1em;
+    color: #495057;
+}
+/* Estilo para el foco en el input */
+.input-group input[type="number"]:focus {
+    outline: none;
+    border-color: #FF6600; /* Borde naranja al enfocar */
+    box-shadow: 0 0 0 2px rgba(255, 102, 0, 0.2);
+}
+
+
+/* Botón Principal - Naranja NEFRA */
+button#calculateBtn {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    background-color: #FF6600; /* Naranja NEFRA */
+    color: white; /* Texto blanco */
+    border: none;
+    border-radius: 6px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+button#calculateBtn:hover, button#calculateBtn:focus {
+    background-color: #E65C00; /* Naranja un poco más oscuro */
+    outline: none;
+}
+/* Efecto al presionar */
+button#calculateBtn:active {
+    transform: scale(0.98);
+}
+
+
+/* Área de resultados */
+.result-area {
+    margin-top: 25px;
+    padding: 20px;
+    background-color: #eef3f8; /* Fondo azul muy claro */
+    border-radius: 6px;
+    text-align: center;
+    border: 1px solid #d0e0f0; /* Borde azul claro */
+    min-height: 80px;
+}
+
+.result-area p {
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    color: #003366; /* Texto azul oscuro */
+}
+
+.result-value {
+    font-weight: bold;
+    font-size: 1.4em;
+    color: #003366; /* Resultado también en azul oscuro principal */
+    display: inline-block; /* Para posibles animaciones o efectos */
+    margin-left: 5px;
+}
+/* Estilo específico para destacar valores principales */
+.result-area p:first-of-type .result-value,
+.result-area p:nth-of-type(2) .result-value {
+   color: #FF6600; /* Quizás usar naranja para los números clave? (Opcional) */
+   /* O mantener el azul #003366 si prefieres */
+}
+
+
+.result-area.error p {
+    color: #dc3545 !important; /* Rojo para errores, importante para sobreescribir */
+    font-weight: bold;
+}
+
+/* Línea separadora */
+hr {
+    border: none;
+    border-top: 1px solid #dee2e6 !important; /* Línea separadora más clara */
+    margin: 15px 0 !important;
+}
+
+/* Recordatorios */
+.result-area div { /* Estilo para el div de recordatorios */
+ text-align: left;
+ font-size: 0.9em;
+ margin-top: 15px;
+ padding-top: 10px;
+ border-top: 1px dashed #ced4da; /* Separador punteado */
+}
+.result-area div p { /* Párrafo dentro de recordatorios */
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #003366; /* Azul oscuro */
+}
+.result-area ul {
+    list-style-position: inside;
+    padding-left: 0;
+}
+.result-area li {
+   margin-bottom: 5px;
+   color: #495057; /* Gris oscuro para texto normal de recordatorio */
+}
+.result-area li strong { /* Estilo para el recordatorio crítico */
+   color: #dc3545; /* Rojo */
+}
+
+/* Info de parámetros */
+.parameters-info {
+    margin-top: 25px;
+    text-align: center;
+    font-size: 0.8em;
+    color: #6c757d;
+}
+
+/* Media Query simple (sin cambios, ya estaba) */
+@media (min-width: 600px) {
+    .calculator-container {
+        max-width: 500px;
+    }
+}

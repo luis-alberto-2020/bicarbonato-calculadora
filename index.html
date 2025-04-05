@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Bicarb</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#007bff"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+    <div class="calculator-container">
+        <h1>Calculadora Bicarbonato NEFRA</h1>
+
+        <div class="input-group">
+            <label for="numPatientsInput">Nº de Pacientes / Máquinas:</label>
+            <input type="number" id="numPatientsInput" inputmode="numeric" pattern="[0-9]*" min="1" required>
+        </div>
+
+        <button id="calculateBtn">Calcular Preparación</button>
+
+        <div id="resultArea" class="result-area" aria-live="polite">
+            </div>
+
+        <div class="parameters-info">
+            <small>Parámetros Usados: 6 L/paciente, 8 L/bolsa (672g)</small>
+            </div>
+    </div>
+
+    <script src="calculator.js"></script>
+    <script>
+        // Registro básico del Service Worker para PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                .then(registration => {
+                    console.log('ServiceWorker registrado con éxito:', registration.scope);
+                })
+                .catch(error => {
+                    console.log('Fallo en registro de ServiceWorker:', error);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
