@@ -1,5 +1,5 @@
 // =============================================
-//      calculator.js - Código Completo
+//      calculator.js - Código Completo FINAL
 // =============================================
 
 /**
@@ -47,12 +47,15 @@ document.addEventListener('DOMContentLoaded', () => {
         // 1. Obtener número REAL de pacientes del input
         const actualPatients = parseInt(numPatientsInput.value, 10);
 
-        // 2. Validar entrada inicial (permitimos 0 pacientes)
-        if (isNaN(actualPatients) || actualPatients === null || actualPatients < 0) {
-             resultArea.innerHTML = `<p>Por favor, ingrese un número válido de pacientes (0 o más).</p>`;
+        // 2. *** VALIDACIÓN ACTUALIZADA: Debe ser > 0 ***
+        //    Verificar que sea un número válido Y que sea mayor que cero.
+        if (isNaN(actualPatients) || actualPatients === null || actualPatients <= 0) {
+             resultArea.innerHTML = `<p>Debe ingresar al menos 1 paciente para realizar el cálculo.</p>`;
              resultArea.classList.add('error');
-             return; // Salir si la entrada no es válida
+             return; // Salir, no continuar con el cálculo si es 0 o inválido
         }
+
+        // --- Si la validación pasa (actualPatients > 0), continuar ---
 
         // 3. Aplicar margen de error +1 paciente INTERNAMENTE
         const calculationPatients = actualPatients + 1;
@@ -60,32 +63,21 @@ document.addEventListener('DOMContentLoaded', () => {
         // 4. Llamar a la función de cálculo con el número AJUSTADO
         const result = calculateBicarbPreparation(calculationPatients);
 
-        // 5. Mostrar resultados si el cálculo fue exitoso
+        // 5. Mostrar resultados (si el cálculo fue exitoso)
         if (result) {
-            let initialWaterInstructionText;
             const finalVolume = result.liters;
 
-            // --- Lógica Condicional para Instrucción de Agua Inicial ---
-            if (result.bags === 1) {
-                // Caso especial: 1 sola bolsa (8 Litros finales)
-                initialWaterInstructionText = `
-                    Para 1 bolsa (${finalVolume}L): Llenar agua inicial hasta aprox. <strong>6-7 Litros</strong>.
-                    <br><small style="display: block; margin-top: 5px; color: #6c757d;">
-                        (Mezclar y luego ajustar cuidadosamente hasta la marca final de ${finalVolume}L).
-                    </small>
-                `;
-            } else {
-                // Caso general: Más de 1 bolsa
-                // Aplicar regla "-10L", asegurando que sea al menos 1 Litro
-                const initialWater = Math.max(1, finalVolume - 10);
-                initialWaterInstructionText = `
-                    Llenar Mixer con agua hasta aprox. <strong class="result-value" style="color: #007bff;">${initialWater}</strong> Litros.
-                    <br><small style="display: block; margin-top: 5px; color: #6c757d;">
-                        (Regla "Volumen Final - 10L". Ajustar a ${finalVolume}L exactos después de disolver).
-                    </small>
-                `;
-            }
-            // --- Fin Lógica Condicional ---
+            // --- Lógica de Agua Inicial (Simplificada, ya que siempre será para >= 2 bolsas) ---
+            // Aplicar regla "-10L", asegurando que sea al menos 1 Litro
+            // (Con mínimo 1 paciente real -> cálculo para 2 -> 2 bolsas -> 16L. 16-10=6L. Siempre será >= 1)
+            const initialWater = finalVolume - 10;
+            const initialWaterInstructionText = `
+                Llenar Mixer con agua hasta aprox. <strong class="result-value" style="color: #007bff;">${initialWater}</strong> Litros.
+                <br><small style="display: block; margin-top: 5px; color: #6c757d;">
+                    (Regla "Volumen Final - 10L". Ajustar a ${finalVolume}L exactos después de disolver).
+                </small>
+            `;
+            // --- Fin Lógica de Agua Inicial ---
 
             // Construir el HTML completo para mostrar en el área de resultados
             resultArea.innerHTML = `
@@ -107,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
         } else {
-             // Si calculateBicarbPreparation devolvió null (no debería pasar con la validación previa, pero por seguridad)
+             // Si calculateBicarbPreparation devolvió null (no debería ocurrir con la nueva validación)
              resultArea.innerHTML = `<p>Error inesperado en el cálculo.</p>`;
              resultArea.classList.add('error');
         }
@@ -116,9 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
      // Opcional: Permitir calcular presionando la tecla Enter en el campo de entrada
      numPatientsInput.addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
-            // Prevenir el comportamiento por defecto (ej. enviar formulario si lo hubiera)
             e.preventDefault();
-            // Simular un clic en el botón de calcular
             calculateBtn.click();
         }
     });
